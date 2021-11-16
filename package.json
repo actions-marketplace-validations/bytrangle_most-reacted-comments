@@ -20,5 +20,8 @@
   "homepage": "https://github.com/bytrangle/welcome-to-open-source#readme",
   "dependencies": {
     "octokit": "^1.7.0"
+  },
+  "devDependencies": {
+    "axios": "^0.24.0"
   }
 }
