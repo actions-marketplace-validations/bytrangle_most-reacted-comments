@@ -4,6 +4,7 @@
   "description": "Github Action for generating stats about first-time contributions. Make your open source project truly welcoming to them",
   "main": "index.js",
   "scripts": {
+    "build": "ncc build src/action.js -o dist",
     "test": "echo \"Error: no test specified\" && exit 1",
     "bump": "npm version"
   },
