@@ -1,9 +1,10 @@
-name: Hello World
+name: "Hello World"
+
 on: [push, pull_request]
 
 jobs:
-  hello-world: #unique id for the job
+  hello-world:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: ./ # location of the workflow file to run as a job
+    - uses: actions/checkout@v1
+    - uses: ./
