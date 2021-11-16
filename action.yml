@@ -3,5 +3,5 @@ description: 'Generating stats about first-time contributions. Make your open so
 author: 'Trang Le <trang.thule@zoho.com>'
 
 runs:
-  using: 'node14'
-  main: 'index.js'
+  using: 'node12'
+  main: 'index.js --experimental-modules'
