@@ -1,6 +1,6 @@
 {
   "name": "welcome-to-open-source",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Github Action for generating stats about first-time contributions. Make your open source project truly welcoming to them",
   "main": "index.js",
   "type": "module",
