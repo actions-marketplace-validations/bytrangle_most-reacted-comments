@@ -1,3 +1,3 @@
-const { Octokit } = require("octokit")
+const ot = require("octokit")
 
 console.log('Hello World')
