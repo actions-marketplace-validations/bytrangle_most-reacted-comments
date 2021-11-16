@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/bytrangle/welcome-to-open-source/issues"
   },
-  "homepage": "https://github.com/bytrangle/welcome-to-open-source#readme"
+  "homepage": "https://github.com/bytrangle/welcome-to-open-source#readme",
+  "dependencies": {
+    "octokit": "^1.7.0"
+  }
 }
