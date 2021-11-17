@@ -15,5 +15,9 @@ jobs:
         with:
           character: bender
         id: futurama
+      - name: Test invalid input
+        uses: ./
+        with:
+          character: otto
       - name: After Hello World
         run: echo ${{steps.futurama.outputs.quote}}
