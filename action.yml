@@ -2,6 +2,10 @@ name: 'Hello World'
 description: 'Generating stats about first-time contributions. Make your open source project truly welcoming to them'
 author: 'Trang Le <trang.thule@zoho.com>'
 
+inputs:
+  character:
+    description: 'Futurama character'
+    default: 'dr-zoidberg'
 runs:
   using: 'node12'
   main: 'dist/index.js'
