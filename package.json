@@ -23,6 +23,7 @@
     "octokit": "^1.7.0"
   },
   "devDependencies": {
+    "@actions/core": "^1.6.0",
     "@zeit/ncc": "^0.22.3",
     "axios": "^0.24.0"
   }
