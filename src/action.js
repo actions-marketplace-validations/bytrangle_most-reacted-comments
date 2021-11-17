@@ -9,6 +9,7 @@ async function run() {
   const { data = [] } = response
   const firstEntry = data[0]
   console.log(`${firstEntry.character}: ${firstEntry.quote}`)
+  core.setOutput('quote', firstEntry)
 }
 
 run()

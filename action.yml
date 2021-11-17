@@ -6,6 +6,11 @@ inputs:
   character:
     description: 'Futurama character'
     default: 'dr-zoidberg'
+
+outputs:
+  quote:
+    description: 'The resulting futurama quote'
+
 runs:
   using: 'node12'
   main: 'dist/index.js'
