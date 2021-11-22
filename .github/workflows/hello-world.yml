@@ -18,6 +18,6 @@ jobs:
       - name: Test invalid input
         uses: ./
         with:
-          character: otto
+          character: leela
       - name: After Hello World
         run: echo ${{steps.futurama.outputs.quote}}
