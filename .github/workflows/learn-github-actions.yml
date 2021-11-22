@@ -9,13 +9,15 @@ jobs:
       - name: checkout repo content
         uses: actions/checkout@v2
 
-      - name: set up node
-        uses: actions/setup-node@v2
+      - name: set up python
+        uses: actions/setup-python@v2
         with:
-          node-version: '14'
-          
-      - name: install bats
-        run: npm install -g bats
+          python-version: '3.7.7'
 
-      - name: check bats version
-        run: bats -v
+      - name: install python packages
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: execute script
+        run: python python-script.py
