@@ -24,7 +24,11 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: execute script
-        env:
-          ISSUE: 1
-        run: python python-script.py
+      - name: get issue id
+        id: get_issue_id
+        run: |
+          echo "env: #${{ github.event }}"
+      # - name: execute script
+      #   env:
+      #     ISSUE: 1
+      #   run: python python-script.py
