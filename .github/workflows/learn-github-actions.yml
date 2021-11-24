@@ -4,6 +4,7 @@ on: [push]
 
 jobs:
   run-python-script:
+    name: Get most reacted comments
     runs-on: ubuntu-latest
     steps:
       - name: checkout repo content
