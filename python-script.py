@@ -1,1 +1,2 @@
-print('running Python script')
+import os
+print(os.environ)
