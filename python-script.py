@@ -5,3 +5,4 @@ minIssueComment = os.getenv('INPUT_MIN_ISSUE_COMMENT', 20)
 # as environment variable
 
 print(minIssueComment)
+print(os.environ)

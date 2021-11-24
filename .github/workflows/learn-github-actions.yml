@@ -25,4 +25,6 @@ jobs:
           pip install -r requirements.txt
 
       - name: execute script
+        env:
+          ISSUE: ${{ github.event.issue}}
         run: python python-script.py
