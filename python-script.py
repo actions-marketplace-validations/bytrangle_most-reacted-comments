@@ -4,4 +4,5 @@ import os
 # Input parameter passed to jobs.<job_id>.steps[*].width are available
 # as environment variable
 
-print(os.environ['INPUT_MIN_ISSUE_COMMENT'])
+min = os.getenv('INPUT_MIN_ISSUE_COMMENT', 20)
+print(min)
