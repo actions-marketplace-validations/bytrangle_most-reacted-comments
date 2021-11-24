@@ -26,5 +26,5 @@ jobs:
 
       - name: execute script
         env:
-          ISSUE: ${{ github.event.issue}}
+          ISSUE: 1
         run: python python-script.py
