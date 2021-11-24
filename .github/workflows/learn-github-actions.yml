@@ -1,10 +1,14 @@
 name: run python script
 
-on: [push]
+on:
+  issue_comment:
+    types: [created, deleted]
 
 jobs:
   run-python-script:
+    # This job only runs for issue comments
     name: Get most reacted comments
+    if: ${{ !github.event.issue.pull_request }}
     runs-on: ubuntu-latest
     steps:
       - name: checkout repo content
