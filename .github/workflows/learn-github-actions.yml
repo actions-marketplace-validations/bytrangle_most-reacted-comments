@@ -20,6 +20,4 @@ jobs:
           pip install -r requirements.txt
 
       - name: execute script
-        env:
-          min_issue_comment: 50
-        run: MIN_ISSUE_COMMENT=20 python python-script.py
+        run: python python-script.py
