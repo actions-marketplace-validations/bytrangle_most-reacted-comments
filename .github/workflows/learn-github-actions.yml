@@ -1,4 +1,4 @@
-name: run python script
+name: Display most reacted comments for long issue
 
 on:
   issue_comment:
