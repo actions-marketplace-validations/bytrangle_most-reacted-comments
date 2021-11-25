@@ -15,4 +15,5 @@ REPO = environ['GITHUB_REPOSITORY']
 issueUrl = environ['ISSUE_URL']
 # print(issueUrl)
 ISSUE_ID = re.search("issues\/(.+)", issueUrl).group(1)
-print(ISSUE_ID)
+# print(ISSUE_ID)
+print(type(ISSUE_ID))
