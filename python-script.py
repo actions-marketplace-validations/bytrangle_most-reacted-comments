@@ -2,7 +2,7 @@ from os import environ, getenv
 import re
 import requests
 
-minIssueComment = int(getenv('INPUT_MIN_ISSUE_COMMENT', 20))
+minIssueComment = int(getenv('INPUT_MIN_ISSUE_COMMENT', 10))
 print(minIssueComment)
 API_URL = getenv('GITHUB_API_URL', 'https://api.github.com')
 # print(API_URL)
