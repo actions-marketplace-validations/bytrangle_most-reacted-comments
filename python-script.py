@@ -28,7 +28,6 @@ if (len(json) > minIssueComment):
   for comment in json:
     if (comment['reactions']['total_count'] > 0):
       extract = comment["body"][:50] + "..."
-      print(extract)
       reactedComment = { "url": comment["html_url"], "body": extract}
       print(reactedComment)
 else:
