@@ -1,7 +1,8 @@
-from os import environ
+from os import environ, getenv
 # import requests
 
-#minIssueComment = os.getenv('INPUT_MIN_ISSUE_COMMENT', 20)
+minIssueComment = getenv('INPUT_MIN_ISSUE_COMMENT', 20)
+print(minIssueComment)
 # Input parameter passed to jobs.<job_id>.steps[*].width are available
 # as environment variable
 
