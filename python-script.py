@@ -23,3 +23,7 @@ print(commentApiUrl)
 response = requests.get(commentApiUrl)
 json = response.json()
 print(json)
+if (len(json) > minIssueComment):
+  print('Fetching most reacted comments')
+else:
+  print('exit')
