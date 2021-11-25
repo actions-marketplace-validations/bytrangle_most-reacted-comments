@@ -17,3 +17,5 @@ issueUrl = environ['ISSUE_URL']
 ISSUE_ID = re.search("issues\/(.+)", issueUrl).group(1)
 # print(ISSUE_ID)
 print(type(ISSUE_ID))
+commentApiUrl = API_URL + "/repos/" + REPO + "/issues/" + ISSUE_ID + "/comments"
+print(commentApiUrl)
