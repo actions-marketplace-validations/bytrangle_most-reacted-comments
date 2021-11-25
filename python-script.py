@@ -25,5 +25,8 @@ json = response.json()
 # print(len(json))
 if (len(json) > minIssueComment):
   print('Fetching most reacted comments')
+  for comment in json:
+    if (comment['reactions']['total_count'] > 0):
+      print(comment['reactions'])
 else:
   print('exit')
