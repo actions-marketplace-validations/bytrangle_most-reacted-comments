@@ -27,7 +27,7 @@ jobs:
       - name: get issue id
         id: get_issue_id
         env:
-          DUMP: ${{ toJson(github.event.issue.html_url )}}
+          ISSUE_URL: ${{ toJson(github.event.issue.html_url )}}
         run: |
           python python-script.py
       # - name: execute script
