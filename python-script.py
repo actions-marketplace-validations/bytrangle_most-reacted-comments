@@ -25,10 +25,12 @@ json = response.json()
 # print(len(json))
 if (len(json) > minIssueComment):
   print('Fetching most reacted comments')
+  commentList = []
   for comment in json:
     if (comment['reactions']['total_count'] > 0):
       extract = comment["body"][:50] + "..."
       reactedComment = { "url": comment["html_url"], "body": extract}
-      print(reactedComment)
+      commentList.append(reactedComment)
+  print(commentList)
 else:
   print('exit')
