@@ -10,3 +10,5 @@ print(API_URL)
 
 #ISSUE_URL = env['ISSUE_URL']
 print(environ)
+
+REPO = environ['GITHUB_REPOSITORY']
