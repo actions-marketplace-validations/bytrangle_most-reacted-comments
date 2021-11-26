@@ -34,6 +34,8 @@ if (len(json) > minIssueComment):
       reactedComment = { "url": comment["html_url"], "body": extract, "reactionCount": reactionCount}
       commentList.append(reactedComment)
   commentList = sorted(commentList, key = lambda i: i["reactionCount"], reverse=True)
+  if (len(commentList) > MAX_REACTED_COMMENT):
+    commentList = commentList[:MAX_REACTED_COMMENT]
   print(commentList)
 else:
   print('exit')
