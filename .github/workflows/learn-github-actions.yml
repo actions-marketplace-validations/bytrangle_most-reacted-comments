@@ -28,6 +28,7 @@ jobs:
         id: get_issue_id
         env:
           ISSUE_URL: ${{ github.event.issue.html_url }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
         run: |
           python python-script.py
       # - name: execute script

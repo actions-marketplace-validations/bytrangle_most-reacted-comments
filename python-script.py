@@ -10,7 +10,8 @@ MAX_REACTED_COMMENTS = int(getenv('INPUT_MAXIMUM_REACTED_COMMENTS', 5))
 # Input parameter passed to jobs.<job_id>.steps[*].width are available
 # as environment variable
 
-print(environ)
+token = getenv('GITHUB_TOKEN')
+print(token)
 
 REPO = environ['GITHUB_REPOSITORY']
 issueUrl = environ['ISSUE_URL']
