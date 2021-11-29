@@ -38,6 +38,9 @@ if (len(json) > minIssueComment):
   commentList = sorted(commentList, key = lambda i: i["reactionCount"], reverse=True)
   if (len(commentList) > MAX_REACTED_COMMENTS):
     commentList = commentList[:MAX_REACTED_COMMENTS]
-  print(commentList)
+  issueResp = requests.get(ISSUE_API)
+  issueJson = issueResp.json()
+  print(issueJson)
+  # print(commentList)
 else:
   print('exit')
