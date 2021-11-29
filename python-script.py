@@ -41,7 +41,11 @@ if (len(commentJson) > minIssueComment):
   issueJson = issueResp.json()
   issueBody = issueJson['body']
   print(issueBody)
-  newIssueBody = issueBody + '\r\n## Potentially helpful comments'
-  # print(commentList)
+  commentBody = '## Potentially helpful comments'
+  for x in commentList:
+    # commentBody += '\r\n[' + x['body'] + ']' + '(' + x['url'] + ')'
+    commentBody += f'\r\n[{x["body"]}]({x["url"]})'
+  #newIssueBody = issueBody + '\r\n## Potentially helpful comments\r\n'
+  print(commentBody)
 else:
   print('exit')
