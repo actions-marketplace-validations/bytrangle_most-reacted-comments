@@ -45,6 +45,7 @@ if (len(commentJson) > minIssueComment):
   for x in commentList:
     commentBody += f'\r\n[{x["body"]}]({x["url"]})'
   commentBody += '</details>'
-  print(commentBody)
+  issueBody += commentBody
+  print(issueBody)
 else:
   print('exit')
