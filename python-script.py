@@ -5,7 +5,7 @@ import requests
 API_URL = getenv('GITHUB_API_URL', 'https://api.github.com')
 # print(API_URL)
 minIssueComment = int(getenv('INPUT_MIN_ISSUE_COMMENT', 10))
-print(minIssueComment)
+# print(minIssueComment)
 MAX_REACTED_COMMENTS = int(getenv('INPUT_MAXIMUM_REACTED_COMMENTS', 5))
 # Input parameter passed to jobs.<job_id>.steps[*].width are available
 # as environment variable
@@ -15,13 +15,13 @@ MAX_REACTED_COMMENTS = int(getenv('INPUT_MAXIMUM_REACTED_COMMENTS', 5))
 REPO = environ['GITHUB_REPOSITORY']
 issueUrl = environ['ISSUE_URL']
 ISSUE_API = re.sub("github.com", "api.github.com/repos", issueUrl)
-print(ISSUE_API)
+# print(ISSUE_API)
 # print(issueUrl)
 ISSUE_ID = re.search("issues\/(.+)", issueUrl).group(1)
 # print(ISSUE_ID)
 # print(type(ISSUE_ID))
 commentApiUrl = API_URL + "/repos/" + REPO + "/issues/" + ISSUE_ID + "/comments"
-print(commentApiUrl)
+# print(commentApiUrl)
 
 commentResp = requests.get(commentApiUrl)
 commentJson = commentResp.json()
@@ -40,12 +40,11 @@ if (len(commentJson) > minIssueComment):
   issueResp = requests.get(ISSUE_API)
   issueJson = issueResp.json()
   issueBody = issueJson['body']
-  print(issueBody)
-  commentBody = '## Potentially helpful comments'
+  # print(issueBody)
+  commentBody = '<details><summary><strong>Potentially helpful comments</strong></summary>'
   for x in commentList:
-    # commentBody += '\r\n[' + x['body'] + ']' + '(' + x['url'] + ')'
     commentBody += f'\r\n[{x["body"]}]({x["url"]})'
-  #newIssueBody = issueBody + '\r\n## Potentially helpful comments\r\n'
+  commentBody += '</details>'
   print(commentBody)
 else:
   print('exit')
