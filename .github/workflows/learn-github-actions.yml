@@ -31,8 +31,3 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
         run: |
           python python-script.py
-      - name: get github token
-      #   env:
-      #     ISSUE: 1
-        run: |
-          echo token is ${{ secrets.GITHUB_TOKEN }}
