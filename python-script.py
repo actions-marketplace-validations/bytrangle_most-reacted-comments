@@ -23,14 +23,12 @@ ISSUE_ID = re.search("issues\/(.+)", issueUrl).group(1)
 commentApiUrl = API_URL + "/repos/" + REPO + "/issues/" + ISSUE_ID + "/comments"
 print(commentApiUrl)
 
-response = requests.get(commentApiUrl)
-json = response.json()
-issueResp = requests.get(ISSUE_API)
-print(issueResp.json()['comments'])
-if (len(json) > minIssueComment):
+commentResp = requests.get(commentApiUrl)
+commentJson = commentResp.json()
+if (len(commentJson) > minIssueComment):
   print('Fetching most reacted comments')
   commentList = []
-  for comment in json:
+  for comment in commentJson:
     reactionCount = comment["reactions"]["total_count"]
     if (reactionCount > 0):
       extract = comment["body"][:50] + "..."
@@ -39,8 +37,9 @@ if (len(json) > minIssueComment):
   commentList = sorted(commentList, key = lambda i: i["reactionCount"], reverse=True)
   if (len(commentList) > MAX_REACTED_COMMENTS):
     commentList = commentList[:MAX_REACTED_COMMENTS]
-  
-  issueBody = issueResp.json()['body']
+  issueResp = requests.get(ISSUE_API)
+  issueJson = issueResp.json()
+  issueBody = issueJson['body']
   print(issueBody)
   newIssueBody = issueBody + '\r\n## Potentially helpful comments'
   # print(commentList)
