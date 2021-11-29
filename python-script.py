@@ -25,7 +25,8 @@ print(commentApiUrl)
 
 response = requests.get(commentApiUrl)
 json = response.json()
-# print(len(json))
+issueResp = requests.get(ISSUE_API)
+print(issueResp.json()['comments'])
 if (len(json) > minIssueComment):
   print('Fetching most reacted comments')
   commentList = []
@@ -38,9 +39,10 @@ if (len(json) > minIssueComment):
   commentList = sorted(commentList, key = lambda i: i["reactionCount"], reverse=True)
   if (len(commentList) > MAX_REACTED_COMMENTS):
     commentList = commentList[:MAX_REACTED_COMMENTS]
-  issueResp = requests.get(ISSUE_API)
-  issueJson = issueResp.json()
-  print(issueJson)
+  
+  issueBody = issueResp.json()['body']
+  print(issueBody)
+  newIssueBody = issueBody + '\r\n## Potentially helpful comments'
   # print(commentList)
 else:
   print('exit')
