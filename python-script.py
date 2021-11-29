@@ -14,6 +14,8 @@ MAX_REACTED_COMMENTS = int(getenv('INPUT_MAXIMUM_REACTED_COMMENTS', 5))
 
 REPO = environ['GITHUB_REPOSITORY']
 issueUrl = environ['ISSUE_URL']
+ISSUE_API = re.sub("github.com", "api.github.com/repos", issueUrl)
+print(ISSUE_API)
 # print(issueUrl)
 ISSUE_ID = re.search("issues\/(.+)", issueUrl).group(1)
 # print(ISSUE_ID)
