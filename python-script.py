@@ -28,16 +28,15 @@ def constructNewIssueContent(comments, url):
   issueBody += commentBody
   return issueBody
 
-def updateIssue(url, token, content):
+def updateIssue(token, content):
   head = dict(authorization='Bearer ' + token, accept='application/vnd.github.v3+json')
   payload = {"body": content}
-  updateIssueReq = requests.patch(url, json.dumps(payload), headers=head)
+  updateIssueReq = requests.patch(ISSUE_API, json.dumps(payload), headers=head)
   print(updateIssueReq.json())
 
-def getIssueComments():
+def processCommentsAndIssue():
   print('Updating issue')
-  issueUrl = environ['ISSUE_URL']
-  ISSUE_API = re.sub("github.com", "api.github.com/repos", issueUrl)
+
 # print(ISSUE_API)
 # print(issueUrl)
   MIN_TOTAL_COMMENT = int(getenv('INPUT_MIN_ISSUE_COMMENT', 10))
@@ -80,7 +79,11 @@ def getIssueComments():
 
 token = getenv('GITHUB_TOKEN')
 if token is not None:
-  formattedIssue = getIssueComments()
-  print(formattedIssue)
+  issueUrl = environ['ISSUE_URL']
+  ISSUE_API = re.sub("github.com", "api.github.com/repos", issueUrl)
+  newIssueContent = processCommentsAndIssue()
+  print(newIssueContent)
+  # if (len(newIssueContent) > 0):
+  #   updateIssue(content=newIssueContent)
 else:
   print('No Github token is found')
