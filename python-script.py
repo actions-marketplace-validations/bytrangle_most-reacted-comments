@@ -3,6 +3,19 @@ import re
 import requests
 import json
 
+def getMostReactedComments(comments, maxComments):
+  mostReactedList = []
+  for comment in comments:
+    reactionCount = comment["reactions"]["total_count"]
+    if (reactionCount > 0):
+      extract = comment["body"][:50] + "..."
+      reactedComment = { "url": comment["html_url"], "body": extract, "reactionCount": reactionCount}
+      mostReactedList.append(reactedComment)
+  mostReactedList = sorted(mostReactedList, key = lambda i: i["reactionCount"], reverse=True)
+  if (len(mostReactedList) > maxComments):
+    mostReactedList = mostReactedList[:maxComments]
+  return mostReactedList
+
 def getIssueComments(token):
   print('Updating issue')
   head = dict(authorization='Bearer ' + token, accept='application/vnd.github.v3+json')
@@ -19,6 +32,9 @@ def getIssueComments(token):
   commentResp = requests.get(ISSUE_COMMENT_API)
   commentJson = commentResp.json()
   print(commentJson)
+  if (len(commentJson) > MIN_TOTAL_COMMENT):
+    mostReactedComments = getMostReactedComments(commentJson, MAX_REACTED_COMMENTS)
+    print(mostReactedComments)
   # payload = {"body": "This is just a fake issue to test a Github action."}
   # r = requests.patch(ISSUE_API, json.dumps(payload), headers=head)
   # print(r)
@@ -34,18 +50,9 @@ def getIssueComments(token):
 # # print(type(ISSUE_ID))
 #   commentApiUrl = API_URL + "/repos/" + REPO + "/issues/" + ISSUE_ID + "/comments"
 # # print(commentApiUrl)
-#   if (len(commentJson) > minIssueComment):
+
 #     print('Fetching most reacted comments')
-#     commentList = []
-#     for comment in commentJson:
-#       reactionCount = comment["reactions"]["total_count"]
-#       if (reactionCount > 0):
-#         extract = comment["body"][:50] + "..."
-#         reactedComment = { "url": comment["html_url"], "body": extract, "reactionCount": reactionCount}
-#         commentList.append(reactedComment)
-#     commentList = sorted(commentList, key = lambda i: i["reactionCount"], reverse=True)
-#     if (len(commentList) > MAX_REACTED_COMMENTS):
-#       commentList = commentList[:MAX_REACTED_COMMENTS]
+#       
 #     issueResp = requests.get(ISSUE_API)
 #     issueJson = issueResp.json()
 #     issueBody = issueJson['body']
