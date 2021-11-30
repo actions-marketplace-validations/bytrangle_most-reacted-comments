@@ -31,7 +31,7 @@ def constructNewIssueContent(original, commentList):
   updatedContent = original + newContent
   return updatedContent
 
-def updateIssue(token, content):
+def updateIssue(content):
   head = dict(authorization='Bearer ' + token, accept='application/vnd.github.v3+json')
   payload = {"body": content}
   updateIssueReq = requests.patch(ISSUE_API, json.dumps(payload), headers=head)
@@ -88,7 +88,7 @@ if token is not None:
   ISSUE_API = re.sub("github.com", "api.github.com/repos", issueUrl)
   newIssueContent = processCommentsAndIssue()
   print(newIssueContent)
-  # if (len(newIssueContent) > 0):
-  #   updateIssue(content=newIssueContent)
+  if (len(newIssueContent) > 0):
+    updateIssue(newIssueContent)
 else:
   print('No Github token is found')
