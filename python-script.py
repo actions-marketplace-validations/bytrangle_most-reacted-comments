@@ -16,16 +16,16 @@ def getMostReactedComments(comments, maxComments):
     mostReactedList = mostReactedList[:maxComments]
   return mostReactedList
 
-def updateIssue(comments, url):
+def constructNewIssueContent(comments, url):
   issueResp = requests.get(url)
   issueJson = issueResp.json()
   issueBody = issueJson['body']
-  commentBody = '<details><summary><strong>Potentially helpful comments</strong></summary>'
+  commentBody = '\r\n<details><summary><strong>Potentially helpful comments</strong></summary>'
   for x in comments:
     commentBody += f'\r\n[{x["body"]}]({x["url"]})'
-  commentBody += '</details>'
+  commentBody += '\r\n</details>'
   issueBody += commentBody
-  print(issueBody)
+  return issueBody
 
 def getIssueComments(token):
   print('Updating issue')
@@ -45,7 +45,7 @@ def getIssueComments(token):
   if (len(commentJson) > MIN_TOTAL_COMMENT):
     mostReactedComments = getMostReactedComments(commentJson, MAX_REACTED_COMMENTS)
     print(mostReactedComments)
-    updateIssue(mostReactedComments, ISSUE_API)
+    updatedIssueContent = constructNewIssueContent(mostReactedComments, ISSUE_API)
   # payload = {"body": "This is just a fake issue to test a Github action."}
   # r = requests.patch(ISSUE_API, json.dumps(payload), headers=head)
   # print(r)
