@@ -11,7 +11,8 @@ def getMostReactedComments(comments, maxComments):
       extract = comment["body"][:50] + "..."
       reactedComment = { "url": comment["html_url"], "body": extract, "reactionCount": reactionCount}
       mostReactedList.append(reactedComment)
-  mostReactedList = sorted(mostReactedList, key = lambda i: i["reactionCount"], reverse=True)
+  if (len(mostReactedList) > 0):
+    mostReactedList = sorted(mostReactedList, key = lambda i: i["reactionCount"], reverse=True)
   if (len(mostReactedList) > maxComments):
     mostReactedList = mostReactedList[:maxComments]
   return mostReactedList
@@ -49,9 +50,9 @@ def getIssueComments():
   commentJson = commentResp.json()
   updatedIssueContent = ''
   if (len(commentJson) > MIN_TOTAL_COMMENT):
-    mostReactedComments = getMostReactedComments(commentJson, MAX_REACTED_COMMENTS)
-    print(mostReactedComments)
-    updatedIssueContent = constructNewIssueContent(mostReactedComments, ISSUE_API)
+    mostReactedComment = getMostReactedComments(commentJson, MAX_REACTED_COMMENTS)
+    # print(mostReactedComment)
+    updatedIssueContent = constructNewIssueContent(mostReactedComment, ISSUE_API)
   return updatedIssueContent
   # payload = {"body": "This is just a fake issue to test a Github action."}
   # r = requests.patch(ISSUE_API, json.dumps(payload), headers=head)
