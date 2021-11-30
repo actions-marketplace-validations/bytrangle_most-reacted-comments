@@ -39,14 +39,10 @@ def updateIssue(content):
 
 def processCommentsAndIssue():
   print('Updating issue')
-
-# print(ISSUE_API)
-# print(issueUrl)
   MIN_TOTAL_COMMENT = int(getenv('INPUT_MIN_ISSUE_COMMENT', 10))
   MAX_REACTED_COMMENTS = int(getenv('INPUT_MAXIMUM_REACTED_COMMENTS', 5))
   # Input parameter passed to jobs.<job_id>.steps[*].with are available
   # as environment variables with prefix INPUT
-  REPO = environ['GITHUB_REPOSITORY']
   ISSUE_COMMENT_API = ISSUE_API + '/comments'
   commentResp = requests.get(ISSUE_COMMENT_API)
   commentJson = commentResp.json()
@@ -58,29 +54,6 @@ def processCommentsAndIssue():
     updatedIssueContent = constructNewIssueContent(original=originalIssueContent, commentList=mostReactedComment)
   print(updatedIssueContent)
   return updatedIssueContent
-  # payload = {"body": "This is just a fake issue to test a Github action."}
-  # r = requests.patch(ISSUE_API, json.dumps(payload), headers=head)
-  # print(r)
-  # rJson = r.json()
-  # print(rJson)
-
-#   API_URL = getenv('GITHUB_API_URL', 'https://api.github.com')
-#   # print(API_URL)
-#   # print(minIssueComment)
-
-#   ISSUE_ID = re.search("issues\/(.+)", issueUrl).group(1)
-# # print(ISSUE_ID)
-# # print(type(ISSUE_ID))
-#   commentApiUrl = API_URL + "/repos/" + REPO + "/issues/" + ISSUE_ID + "/comments"
-# # print(commentApiUrl)
-
-#     print('Fetching most reacted comments')
-#       
-#     # print(issueBody)
-#     issueBody += commentBody
-#     print(issueBody)
-#   else:
-#     print('exit')
 
 token = getenv('GITHUB_TOKEN')
 if token is not None:
