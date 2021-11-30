@@ -27,9 +27,14 @@ def constructNewIssueContent(comments, url):
   issueBody += commentBody
   return issueBody
 
-def getIssueComments(token):
-  print('Updating issue')
+def updateIssue(url, token, content):
   head = dict(authorization='Bearer ' + token, accept='application/vnd.github.v3+json')
+  payload = {"body": content}
+  updateIssueReq = requests.patch(url, json.dumps(payload), headers=head)
+  print(updateIssueReq.json())
+
+def getIssueComments():
+  print('Updating issue')
   issueUrl = environ['ISSUE_URL']
   ISSUE_API = re.sub("github.com", "api.github.com/repos", issueUrl)
 # print(ISSUE_API)
@@ -42,10 +47,12 @@ def getIssueComments(token):
   ISSUE_COMMENT_API = ISSUE_API + '/comments'
   commentResp = requests.get(ISSUE_COMMENT_API)
   commentJson = commentResp.json()
+  updatedIssueContent = ''
   if (len(commentJson) > MIN_TOTAL_COMMENT):
     mostReactedComments = getMostReactedComments(commentJson, MAX_REACTED_COMMENTS)
     print(mostReactedComments)
     updatedIssueContent = constructNewIssueContent(mostReactedComments, ISSUE_API)
+  return updatedIssueContent
   # payload = {"body": "This is just a fake issue to test a Github action."}
   # r = requests.patch(ISSUE_API, json.dumps(payload), headers=head)
   # print(r)
@@ -72,6 +79,7 @@ def getIssueComments(token):
 
 token = getenv('GITHUB_TOKEN')
 if token is not None:
-  getIssueComments(token)
+  formattedIssue = getIssueComments()
+  print(formattedIssue)
 else:
   print('No Github token is found')
