@@ -26,7 +26,7 @@ def getOriginalIssueBody():
 def constructNewIssueContent(original, commentList):
   newContent = '\r\n<details><summary><strong>Potentially helpful comments</strong></summary>'
   for x in commentList:
-    newContent += f'\r\n[{x["body"]}]({x["url"]})'
+    newContent += f'\r\n<p><a href="{x["url"]}" rel="nofollow">{x["body"]}</p>'
   newContent += '\r\n</details>'
   updatedContent = original + newContent
   return updatedContent
