@@ -1,16 +1,18 @@
 from os import environ, getenv
 import re
 import requests
+import json
 
 def updateIssue(token):
   print('Updating issue')
-  head = { "authorization": "Bearer " + token, "accept": "application/vnd.github.v3+json"}
+  head = dict(authorization='Bearer ' + token, accept='application/vnd.github.v3+json')
   issueUrl = environ['ISSUE_URL']
   ISSUE_API = re.sub("github.com", "api.github.com/repos", issueUrl)
 # print(ISSUE_API)
 # print(issueUrl)
-  payload = {'body': 'This is just a fake issue to test a Github action.'}
-  r = requests.patch(ISSUE_API, payload, headers=head)
+  payload = {"body": "This is just a fake issue to test a Github action."}
+  r = requests.patch(ISSUE_API, json.dumps(payload), headers=head)
+  print(r)
   json = r.json()
   print(json)
 
