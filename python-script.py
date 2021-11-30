@@ -3,35 +3,37 @@ import re
 import requests
 import json
 
-def updateIssue(token):
+def getIssueComments(token):
   print('Updating issue')
   head = dict(authorization='Bearer ' + token, accept='application/vnd.github.v3+json')
   issueUrl = environ['ISSUE_URL']
   ISSUE_API = re.sub("github.com", "api.github.com/repos", issueUrl)
 # print(ISSUE_API)
 # print(issueUrl)
-  payload = {"body": "This is just a fake issue to test a Github action."}
-  r = requests.patch(ISSUE_API, json.dumps(payload), headers=head)
-  print(r)
-  rJson = r.json()
-  print(rJson)
+  MIN_TOTAL_COMMENT = int(getenv('INPUT_MIN_ISSUE_COMMENT', 10))
+  MAX_REACTED_COMMENTS = int(getenv('INPUT_MAXIMUM_REACTED_COMMENTS', 5))
+  # Input parameter passed to jobs.<job_id>.steps[*].with are available
+  # as environment variables with prefix INPUT
+  REPO = environ['GITHUB_REPOSITORY']
+  ISSUE_COMMENT_API = ISSUE_API + '/comments'
+  commentResp = requests.get(ISSUE_COMMENT_API)
+  commentJson = commentResp.json()
+  print(commentJson)
+  # payload = {"body": "This is just a fake issue to test a Github action."}
+  # r = requests.patch(ISSUE_API, json.dumps(payload), headers=head)
+  # print(r)
+  # rJson = r.json()
+  # print(rJson)
 
 #   API_URL = getenv('GITHUB_API_URL', 'https://api.github.com')
 #   # print(API_URL)
-#   minIssueComment = int(getenv('INPUT_MIN_ISSUE_COMMENT', 10))
 #   # print(minIssueComment)
-#   MAX_REACTED_COMMENTS = int(getenv('INPUT_MAXIMUM_REACTED_COMMENTS', 5))
-#   # Input parameter passed to jobs.<job_id>.steps[*].width are available
-#   # as environment variable
-#   REPO = environ['GITHUB_REPOSITORY']
+
 #   ISSUE_ID = re.search("issues\/(.+)", issueUrl).group(1)
 # # print(ISSUE_ID)
 # # print(type(ISSUE_ID))
 #   commentApiUrl = API_URL + "/repos/" + REPO + "/issues/" + ISSUE_ID + "/comments"
 # # print(commentApiUrl)
-
-#   commentResp = requests.get(commentApiUrl)
-#   commentJson = commentResp.json()
 #   if (len(commentJson) > minIssueComment):
 #     print('Fetching most reacted comments')
 #     commentList = []
@@ -59,6 +61,6 @@ def updateIssue(token):
 
 token = getenv('GITHUB_TOKEN')
 if token is not None:
-  updateIssue(token)
+  getIssueComments(token)
 else:
   print('No Github token is found')
