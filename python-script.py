@@ -9,7 +9,7 @@ def updateIssue(token):
   ISSUE_API = re.sub("github.com", "api.github.com/repos", issueUrl)
 # print(ISSUE_API)
 # print(issueUrl)
-  payload = {"body": "## Describe the issue\r\nThis is just a fake issue to test a Github action."}
+  payload = {"body": "This is just a fake issue to test a Github action."}
   r = requests.patch(ISSUE_API, payload, headers=head)
   json = r.json()
   print(json)
