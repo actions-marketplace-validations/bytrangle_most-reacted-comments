@@ -13,8 +13,8 @@ def updateIssue(token):
   payload = {"body": "This is just a fake issue to test a Github action."}
   r = requests.patch(ISSUE_API, json.dumps(payload), headers=head)
   print(r)
-  json = r.json()
-  print(json)
+  rJson = r.json()
+  print(rJson)
 
 #   API_URL = getenv('GITHUB_API_URL', 'https://api.github.com')
 #   # print(API_URL)
