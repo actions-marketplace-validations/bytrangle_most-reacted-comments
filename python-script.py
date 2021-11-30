@@ -2,8 +2,18 @@ from os import environ, getenv
 import re
 import requests
 
-def updateIssue():
+def updateIssue(token):
   print('Updating issue')
+  head = { "authorization": "Bearer " + token, "accept": "application/vnd.github.v3+json"}
+  issueUrl = environ['ISSUE_URL']
+  ISSUE_API = re.sub("github.com", "api.github.com/repos", issueUrl)
+# print(ISSUE_API)
+# print(issueUrl)
+  payload = {"body": "## Describe the issue\r\nThis is just a fake issue to test a Github action."}
+  r = requests.patch(ISSUE_API, payload, headers=head)
+  json = r.json()
+  print(json)
+
 #   API_URL = getenv('GITHUB_API_URL', 'https://api.github.com')
 #   # print(API_URL)
 #   minIssueComment = int(getenv('INPUT_MIN_ISSUE_COMMENT', 10))
@@ -12,10 +22,6 @@ def updateIssue():
 #   # Input parameter passed to jobs.<job_id>.steps[*].width are available
 #   # as environment variable
 #   REPO = environ['GITHUB_REPOSITORY']
-#   issueUrl = environ['ISSUE_URL']
-#   ISSUE_API = re.sub("github.com", "api.github.com/repos", issueUrl)
-# # print(ISSUE_API)
-# # print(issueUrl)
 #   ISSUE_ID = re.search("issues\/(.+)", issueUrl).group(1)
 # # print(ISSUE_ID)
 # # print(type(ISSUE_ID))
@@ -51,6 +57,6 @@ def updateIssue():
 
 token = getenv('GITHUB_TOKEN')
 if token is not None:
-  updateIssue()
+  updateIssue(token)
 else:
   print('No Github token is found')
