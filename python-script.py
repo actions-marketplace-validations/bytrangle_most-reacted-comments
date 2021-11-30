@@ -16,6 +16,17 @@ def getMostReactedComments(comments, maxComments):
     mostReactedList = mostReactedList[:maxComments]
   return mostReactedList
 
+def updateIssue(comments, url):
+  issueResp = requests.get(url)
+  issueJson = issueResp.json()
+  issueBody = issueJson['body']
+  commentBody = '<details><summary><strong>Potentially helpful comments</strong></summary>'
+  for x in comments:
+    commentBody += f'\r\n[{x["body"]}]({x["url"]})'
+  commentBody += '</details>'
+  issueBody += commentBody
+  print(issueBody)
+
 def getIssueComments(token):
   print('Updating issue')
   head = dict(authorization='Bearer ' + token, accept='application/vnd.github.v3+json')
@@ -31,10 +42,10 @@ def getIssueComments(token):
   ISSUE_COMMENT_API = ISSUE_API + '/comments'
   commentResp = requests.get(ISSUE_COMMENT_API)
   commentJson = commentResp.json()
-  print(commentJson)
   if (len(commentJson) > MIN_TOTAL_COMMENT):
     mostReactedComments = getMostReactedComments(commentJson, MAX_REACTED_COMMENTS)
     print(mostReactedComments)
+    updateIssue(mostReactedComments, ISSUE_API)
   # payload = {"body": "This is just a fake issue to test a Github action."}
   # r = requests.patch(ISSUE_API, json.dumps(payload), headers=head)
   # print(r)
@@ -53,14 +64,7 @@ def getIssueComments(token):
 
 #     print('Fetching most reacted comments')
 #       
-#     issueResp = requests.get(ISSUE_API)
-#     issueJson = issueResp.json()
-#     issueBody = issueJson['body']
 #     # print(issueBody)
-#     commentBody = '<details><summary><strong>Potentially helpful comments</strong></summary>'
-#     for x in commentList:
-#       commentBody += f'\r\n[{x["body"]}]({x["url"]})'
-#     commentBody += '</details>'
 #     issueBody += commentBody
 #     print(issueBody)
 #   else:
