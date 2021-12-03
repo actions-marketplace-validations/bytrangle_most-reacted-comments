@@ -58,6 +58,10 @@ import json
 token = getenv('INPUT_REPO_TOKEN')
 if token is not None:
   print(environ)
+  filePath = getenv('GITHUB_EVENT_PATH', '/github/workflows/event.json')
+  with open(filePath) as f:
+    data = json.load(f)
+  print(data["issue"]["html_url"])
 #   issueUrl = environ['ISSUE_URL']
 #   ISSUE_API = re.sub("github.com", "api.github.com/repos", issueUrl)
 #   newIssueContent = processCommentsAndIssue()
