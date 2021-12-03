@@ -23,13 +23,13 @@ def getOriginalIssueBody():
   issueBody = issueJson['body']
   return issueBody
 
-# def constructNewIssueContent(original, commentList):
-#   newContent = '\r\n<details><summary><strong>Potentially helpful comments</strong></summary>'
-#   for x in commentList:
-#     newContent += f'\r\n<p><a href="{x["url"]}" rel="nofollow">{x["body"]}</p>'
-#   newContent += '\r\n</details>'
-#   updatedContent = original + newContent
-#   return updatedContent
+def constructNewIssueContent(original, commentList):
+  newContent = '\r\n<details><summary><strong>Potentially helpful comments</strong></summary>'
+  for x in commentList:
+    newContent += f'\r\n<p><a href="{x["url"]}" rel="nofollow">{x["body"]}</p>'
+  newContent += '\r\n</details>'
+  updatedContent = original + newContent
+  return updatedContent
 
 # def updateIssue(content):
 #   head = dict(authorization='Bearer ' + token, accept='application/vnd.github.v3+json')
@@ -69,13 +69,14 @@ if token is not None:
 #   issueUrl = environ['ISSUE_URL']
   ISSUE_API = re.sub("github.com", "api.github.com/repos", issueUrl)
   comments = issueMeetsRequirement()
-  print(comments)
   if comments is not None:
     reactedCommentList = getMostReactedComments(comments, MAX_REACTED_COMMENTS)
     print(reactedCommentList)
     if (len(reactedCommentList) > 0):
       originalIssueBody = getOriginalIssueBody()
       print(originalIssueBody)
+      newIssueContent = originalIssueBody + constructNewIssueContent(originalIssueBody, reactedCommentList)
+      print(newIssueContent)
 
 #   newIssueContent = processCommentsAndIssue()
 #   print(newIssueContent)
