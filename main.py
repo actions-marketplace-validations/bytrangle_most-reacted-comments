@@ -71,13 +71,13 @@ if token is not None:
   comments = issueMeetsRequirement()
   if comments is not None:
     reactedCommentList = getMostReactedComments(comments, MAX_REACTED_COMMENTS)
-    print(reactedCommentList)
     if (len(reactedCommentList) > 0):
       originalIssueBody = getOriginalIssueBody()
-      x = re.search("<details id=\"reacted-comments\"[\s\S]+<\/details>", originalIssueBody)
+      print(originalIssueBody)
+      print('------------------------')
+      x = re.search("<details id=\".*reacted-comments\"[\s\S]+<\/details>", originalIssueBody)
       print(x)
       newIssueContent = constructNewIssueContent(originalIssueBody, reactedCommentList)
-      print(newIssueContent)
-      updateIssue(newIssueContent)
+      # updateIssue(newIssueContent)
 else:
   print('No Github token is found')
