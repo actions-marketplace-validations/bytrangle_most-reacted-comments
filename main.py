@@ -3,19 +3,19 @@ import re
 import requests
 import json
 
-# def getMostReactedComments(comments, maxComments):
-#   mostReactedList = []
-#   for comment in comments:
-#     reactionCount = comment["reactions"]["total_count"]
-#     if (reactionCount > 0):
-#       extract = comment["body"][:50] + "..."
-#       reactedComment = { "url": comment["html_url"], "body": extract, "reactionCount": reactionCount}
-#       mostReactedList.append(reactedComment)
-#   if (len(mostReactedList) > 0):
-#     mostReactedList = sorted(mostReactedList, key = lambda i: i["reactionCount"], reverse=True)
-#   if (len(mostReactedList) > maxComments):
-#     mostReactedList = mostReactedList[:maxComments]
-#   return mostReactedList
+def getMostReactedComments(comments, maxComments):
+  mostReactedList = []
+  for comment in comments:
+    reactionCount = comment["reactions"]["total_count"]
+    if (reactionCount > 0):
+      extract = comment["body"][:50] + "..."
+      reactedComment = { "url": comment["html_url"], "body": extract, "reactionCount": reactionCount}
+      mostReactedList.append(reactedComment)
+  if (len(mostReactedList) > 0):
+    mostReactedList = sorted(mostReactedList, key = lambda i: i["reactionCount"], reverse=True)
+  if (len(mostReactedList) > maxComments):
+    mostReactedList = mostReactedList[:maxComments]
+  return mostReactedList
 
 # def getOriginalIssueBody():
 #   issueResp = requests.get(ISSUE_API)
@@ -43,7 +43,6 @@ import json
 def issueMeetsRequirement():
   print('Updating issue')
   MIN_TOTAL_COMMENTS = int(getenv('INPUT_MIN_TOTAL_COMMENTS', 10))
-  MAX_REACTED_COMMENTS = int(getenv('INPUT_MAX_REACTED_COMMENT_COUNT', 5))
 #   # Input parameter passed to jobs.<job_id>.steps[*].with are available
 #   # as environment variables with prefix INPUT
   ISSUE_COMMENT_API = ISSUE_API + '/comments'
@@ -51,8 +50,8 @@ def issueMeetsRequirement():
   commentJson = commentResp.json()
 #   updatedIssueContent = ''
   if (len(commentJson) >= MIN_TOTAL_COMMENTS):
-    return True
-  return False
+    return commentJson
+  return None
 #     mostReactedComment = getMostReactedComments(commentJson, MAX_REACTED_COMMENTS)
 #     # print(mostReactedComment)
 #     originalIssueContent = getOriginalIssueBody()
@@ -63,14 +62,19 @@ def issueMeetsRequirement():
 token = getenv('INPUT_REPO_TOKEN')
 if token is not None:
   print(environ)
+  MAX_REACTED_COMMENTS = int(getenv('INPUT_MAX_REACTED_COMMENT_COUNT', 5))
   filePath = getenv('GITHUB_EVENT_PATH', '/github/workflows/event.json')
   with open(filePath) as f:
     data = json.load(f)
   issueUrl = data["issue"]["html_url"]
 #   issueUrl = environ['ISSUE_URL']
   ISSUE_API = re.sub("github.com", "api.github.com/repos", issueUrl)
-  shouldProceed = issueMeetsRequirement()
-  print(shouldProceed)
+  comments = issueMeetsRequirement()
+  print(comments)
+  if comments is not None:
+    reactedCommentList = getMostReactedComments(comments, MAX_REACTED_COMMENTS)
+    print(reactedCommentList)
+
 #   newIssueContent = processCommentsAndIssue()
 #   print(newIssueContent)
 #   if (len(newIssueContent) > 0):
