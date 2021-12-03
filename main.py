@@ -31,11 +31,11 @@ def constructNewIssueContent(original, commentList):
   updatedContent = original + newContent
   return updatedContent
 
-# def updateIssue(content):
-#   head = dict(authorization='Bearer ' + token, accept='application/vnd.github.v3+json')
-#   payload = {"body": content}
-#   updateIssueReq = requests.patch(ISSUE_API, json.dumps(payload), headers=head)
-#   print(updateIssueReq.json())
+def updateIssue(content):
+  head = dict(authorization='Bearer ' + token, accept='application/vnd.github.v3+json')
+  payload = {"body": content}
+  updateIssueReq = requests.patch(ISSUE_API, json.dumps(payload), headers=head)
+  print(updateIssueReq.json())
 
 # This function checks if the total comments in the given issue
 # is equal or greater than the input paremeter min_total_comments
@@ -77,10 +77,6 @@ if token is not None:
       print(originalIssueBody)
       newIssueContent = constructNewIssueContent(originalIssueBody, reactedCommentList)
       print(newIssueContent)
-
-#   newIssueContent = processCommentsAndIssue()
-#   print(newIssueContent)
-#   if (len(newIssueContent) > 0):
-#     updateIssue(newIssueContent)
-# else:
-#   print('No Github token is found')
+      updateIssue(newIssueContent)
+else:
+  print('No Github token is found')
