@@ -78,10 +78,11 @@ if token is not None:
       print(x)
       print('------------------------')
       if x:
+        print('Comment section already exists.')
         newIssueBody = re.sub(pattern, commentSection, originalIssueBody)
       else:
         newIssueBody = originalIssueBody + commentSection
       print(newIssueBody)
-      # updateIssue(newIssueContent)
+      updateIssue(newIssueBody)
 else:
   print('No Github token is found')
