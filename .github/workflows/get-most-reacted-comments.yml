@@ -21,5 +21,3 @@ jobs:
           # or a personal access token generated in Settings
           min_total_comments: 10
           reacted_comment_count: 3
-        run: |
-          python python-script.py
