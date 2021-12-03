@@ -75,7 +75,7 @@ if token is not None:
     if (len(reactedCommentList) > 0):
       originalIssueBody = getOriginalIssueBody()
       print(originalIssueBody)
-      newIssueContent = originalIssueBody + constructNewIssueContent(originalIssueBody, reactedCommentList)
+      newIssueContent = constructNewIssueContent(originalIssueBody, reactedCommentList)
       print(newIssueContent)
 
 #   newIssueContent = processCommentsAndIssue()
