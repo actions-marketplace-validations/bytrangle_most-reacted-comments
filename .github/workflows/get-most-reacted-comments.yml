@@ -20,4 +20,4 @@ jobs:
           # this can be a unique token provided by Github at the start of each workflow
           # or a personal access token generated in Settings
           min_total_comments: 10
-          reacted_comment_count: 3
+          max_reacted_comment_count: 3

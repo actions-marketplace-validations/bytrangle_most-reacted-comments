@@ -6,7 +6,7 @@ inputs:
     description: "The total number of comments an issue needs to have to run this action"
     required: false
     defaults: 20
-  reacted_comment_count:
+  max_reacted_comment_count:
     description: "The number of reacted comments to display in the issue's opening post"
     required: false
     defaults: 5

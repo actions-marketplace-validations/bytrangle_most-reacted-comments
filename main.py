@@ -37,17 +37,22 @@ import json
 #   updateIssueReq = requests.patch(ISSUE_API, json.dumps(payload), headers=head)
 #   print(updateIssueReq.json())
 
-# def processCommentsAndIssue():
-#   print('Updating issue')
-#   MIN_TOTAL_COMMENT = int(getenv('INPUT_MIN_ISSUE_COMMENT', 10))
-#   MAX_REACTED_COMMENTS = int(getenv('INPUT_MAXIMUM_REACTED_COMMENTS', 5))
+# This function checks if the total comments in the given issue
+# is equal or greater than the input paremeter min_total_comments
+# returns TRUE or FALSE accordingly
+def issueMeetsRequirement():
+  print('Updating issue')
+  MIN_TOTAL_COMMENTS = int(getenv('INPUT_MIN_TOTAL_COMMENTS', 10))
+  MAX_REACTED_COMMENTS = int(getenv('INPUT_MAX_REACTED_COMMENT_COUNT', 5))
 #   # Input parameter passed to jobs.<job_id>.steps[*].with are available
 #   # as environment variables with prefix INPUT
-#   ISSUE_COMMENT_API = ISSUE_API + '/comments'
-#   commentResp = requests.get(ISSUE_COMMENT_API)
-#   commentJson = commentResp.json()
+  ISSUE_COMMENT_API = ISSUE_API + '/comments'
+  commentResp = requests.get(ISSUE_COMMENT_API)
+  commentJson = commentResp.json()
 #   updatedIssueContent = ''
-#   if (len(commentJson) > MIN_TOTAL_COMMENT):
+  if (len(commentJson) >= MIN_TOTAL_COMMENTS):
+    return True
+  return False
 #     mostReactedComment = getMostReactedComments(commentJson, MAX_REACTED_COMMENTS)
 #     # print(mostReactedComment)
 #     originalIssueContent = getOriginalIssueBody()
@@ -61,9 +66,11 @@ if token is not None:
   filePath = getenv('GITHUB_EVENT_PATH', '/github/workflows/event.json')
   with open(filePath) as f:
     data = json.load(f)
-  print(data["issue"]["html_url"])
+  issueUrl = data["issue"]["html_url"]
 #   issueUrl = environ['ISSUE_URL']
-#   ISSUE_API = re.sub("github.com", "api.github.com/repos", issueUrl)
+  ISSUE_API = re.sub("github.com", "api.github.com/repos", issueUrl)
+  shouldProceed = issueMeetsRequirement()
+  print(shouldProceed)
 #   newIssueContent = processCommentsAndIssue()
 #   print(newIssueContent)
 #   if (len(newIssueContent) > 0):
