@@ -17,11 +17,11 @@ def getMostReactedComments(comments, maxComments):
     mostReactedList = mostReactedList[:maxComments]
   return mostReactedList
 
-# def getOriginalIssueBody():
-#   issueResp = requests.get(ISSUE_API)
-#   issueJson = issueResp.json()
-#   issueBody = issueJson['body']
-#   return issueBody
+def getOriginalIssueBody():
+  issueResp = requests.get(ISSUE_API)
+  issueJson = issueResp.json()
+  issueBody = issueJson['body']
+  return issueBody
 
 # def constructNewIssueContent(original, commentList):
 #   newContent = '\r\n<details><summary><strong>Potentially helpful comments</strong></summary>'
@@ -61,7 +61,6 @@ def issueMeetsRequirement():
 
 token = getenv('INPUT_REPO_TOKEN')
 if token is not None:
-  print(environ)
   MAX_REACTED_COMMENTS = int(getenv('INPUT_MAX_REACTED_COMMENT_COUNT', 5))
   filePath = getenv('GITHUB_EVENT_PATH', '/github/workflows/event.json')
   with open(filePath) as f:
@@ -74,6 +73,9 @@ if token is not None:
   if comments is not None:
     reactedCommentList = getMostReactedComments(comments, MAX_REACTED_COMMENTS)
     print(reactedCommentList)
+    if (len(reactedCommentList) > 0):
+      originalIssueBody = getOriginalIssueBody()
+      print(originalIssueBody)
 
 #   newIssueContent = processCommentsAndIssue()
 #   print(newIssueContent)
