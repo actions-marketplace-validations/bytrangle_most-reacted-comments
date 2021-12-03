@@ -23,13 +23,12 @@ def getOriginalIssueBody():
   issueBody = issueJson['body']
   return issueBody
 
-def constructNewIssueContent(original, commentList):
+def constructCommentSection(commentList):
   newContent = '\r\n<details id="reacted-comments"><summary><strong>Potentially helpful comments</strong></summary>'
   for x in commentList:
     newContent += f'\r\n<p><a href="{x["url"]}" rel="nofollow">{x["body"]}</p>'
   newContent += '\r\n</details>'
-  updatedContent = original + newContent
-  return updatedContent
+  return newContent
 
 def updateIssue(content):
   head = dict(authorization='Bearer ' + token, accept='application/vnd.github.v3+json')
@@ -73,11 +72,16 @@ if token is not None:
     reactedCommentList = getMostReactedComments(comments, MAX_REACTED_COMMENTS)
     if (len(reactedCommentList) > 0):
       originalIssueBody = getOriginalIssueBody()
-      print(originalIssueBody)
-      print('------------------------')
-      x = re.search("<details id=\".*reacted-comments\"[\s\S]+<\/details>", originalIssueBody)
+      commentSection = constructCommentSection(reactedCommentList)
+      pattern = "<details id=\".*reacted-comments\"[\s\S]+<\/details>"
+      x = re.search(pattern, originalIssueBody)
       print(x)
-      newIssueContent = constructNewIssueContent(originalIssueBody, reactedCommentList)
+      print('------------------------')
+      if x:
+        newIssueBody = re.sub(pattern, commentSection, originalIssueBody)
+      else:
+        newIssueBody = originalIssueBody + commentSection
+      print(newIssueBody)
       # updateIssue(newIssueContent)
 else:
   print('No Github token is found')
