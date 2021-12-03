@@ -24,7 +24,7 @@ def getOriginalIssueBody():
   return issueBody
 
 def constructNewIssueContent(original, commentList):
-  newContent = '\r\n<details><summary><strong>Potentially helpful comments</strong></summary>'
+  newContent = '\r\n<details id="reacted-comments"><summary><strong>Potentially helpful comments</strong></summary>'
   for x in commentList:
     newContent += f'\r\n<p><a href="{x["url"]}" rel="nofollow">{x["body"]}</p>'
   newContent += '\r\n</details>'
@@ -74,7 +74,8 @@ if token is not None:
     print(reactedCommentList)
     if (len(reactedCommentList) > 0):
       originalIssueBody = getOriginalIssueBody()
-      print(originalIssueBody)
+      x = re.search("<details id=\"reacted-comments\"[\s\S]+<\/details>", originalIssueBody)
+      print(x)
       newIssueContent = constructNewIssueContent(originalIssueBody, reactedCommentList)
       print(newIssueContent)
       updateIssue(newIssueContent)
