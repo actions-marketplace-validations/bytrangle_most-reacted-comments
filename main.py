@@ -55,7 +55,7 @@ import json
 #   print(updatedIssueContent)
 #   return updatedIssueContent
 
-token = getenv('GITHUB_TOKEN')
+token = getenv('INPUT_REPO_TOKEN')
 if token is not None:
   print(environ)
 #   issueUrl = environ['ISSUE_URL']
