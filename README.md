@@ -2,6 +2,10 @@
 A simple workflow to make long-winded issues more useful. It checks for the most reacted comments and add them to the issue's original body
 
 ## How does this action work?
+![screenshot](https://raw.githubusercontent.com/bytrangle/most-reacted-comments/main/action-get-most-reacted-comments.gif)
+
+If you prefer a thousand words:
+
 - It is triggered on comment creation or deletion
 - Get the issue number that contains the comment in which the action is run
 - Get a list of comments for the given issue
