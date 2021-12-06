@@ -1,6 +1,9 @@
 name: "Display most reacted comments"
 description: "Update most reacted comments in the issue's opening post to help manage long-winded issue"
 author: "Trang Le"
+branding:
+  icon: "thumbs-down"
+  color: "blue"
 inputs:
   min_total_comments:
     description: "The total number of comments an issue needs to have to run this action"
