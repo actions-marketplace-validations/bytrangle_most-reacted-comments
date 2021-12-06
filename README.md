@@ -3,19 +3,12 @@ A simple workflow to make long-winded issues more useful. It checks for the most
 
 ## How does this action work?
 - It is triggered on comment creation or deletion
-- Get the issue that contains the comment in which the action is run
+- Get the issue number that contains the comment in which the action is run
 - Get a list of comments for the given issue
-- If the number of comments for the issue is greater than a certain value, check for comments that receive at least one reaction and add them to a list.
+- If the number of comments for the issue is greater than a certain value, create a list that contains all comments that receive at least one reaction
 - If list length is greater than 0, rank the comments by the number of reactions they receive, in descending order.
 - Only take the X most reacted comments. This X value is defined by the action user.
 - Insert these comments into the issue's body.
-
-## Why use this workflow?
-Issues with more than 20 comments are tricky. They are hard to keep up with for maintainers and long-time participants. They are also a nightmare to read for newcomers.
-
-Yet it is not so easy as closing the issue, because highly-commented ones tend impact a lot of users.
-
-This workflow will get the most reacted comments in an issue and add it to the issue's original body so that anyone can get a glimpse of the issue in the least time possible.
 
 ## Usage
 An example workflow to use this action may look like this:
@@ -48,5 +41,18 @@ jobs:
           # optional
           # default is 5
 ```
+
+## Why use this workflow?
+Issues with more than 20 comments are tricky. They are hard to keep up with for maintainers and long-time participants. They are also a nightmare to read for newcomers.
+
+Yet it is not so easy as closing the issue, because highly-commented ones tend impact a lot of users.
+
+This workflow will get the most reacted comments in an issue and add it to the issue's original body so that anyone can get a glimpse of the issue in the least time possible.
+
+## Caveats
+Ideally, this workflow should be run on comment reaction. However, at the moment, there is no such event hook in Github Action.
+
+We can make do by getting the action to run on comment creation or deletion until Github actually implements the comment reaction hook.
+
 ## Acknowledgement
 Many thanks to [python container action](https://github.com/jacobtomlinson/python-container-action) for sharing how to write a Docker file run Python.
